@@ -1,5 +1,5 @@
 function sum() {
-
+  console.log('teste');
 }
 
 function sub() {
