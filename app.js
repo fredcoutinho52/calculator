@@ -1,61 +1,73 @@
 
 document.addEventListener("DOMContentLoaded", () => {
-  setDisplay();
-
   const buttons = document.querySelectorAll(".number-button");
   buttons.forEach(item => {
-    item.addEventListener("click", (e) => getNumber(e));
+    item.addEventListener("click", (event) => getNumber(event));
   });
 });
 
-const data = {
-  num: 0,
-  nextNum: 0,
-  operation: "",
-}
+const numbers = [];
+const operations = [];
 
 function setDisplay() {
-  const display = document.querySelector(".display");
-  display.innerText = data.num;
+  const currentEl = document.getElementById("current");
+  let result = "";
+  numbers.forEach((item, index) => {
+    if (index === numbers.length - 1) {
+      result = result + `${item}`;
+      return;
+    }
+    result = result + `${item} ${operations[index]}`;
+  });
+  console.log(result);
 }
 
 function getNumber(event) {
   const value = Number(event.target.innerText);
-  
-  if (data.num !== 0) {
-    data.nextNum = value;
-    setDisplay();
-    return;
-  }
-  
-  data.num = value;
+  numbers.push(value);
   setDisplay();
 }
 
-function sum() {
-  data.operation = "+";
-
-  if (data.num !== 0 && data.nextNum !== 0) {
-    console.log(data.num + data.nextNum);
-    data.num = data.num + data.nextNum;
-    return;
-  }
-}
-
-function sub() {
-  data.operation = "-";
-}
-
-function times() {
-  data.operation = "*";
-}
-
-function divide() {
-  data.operation = "/";
+function getOperation(operation) {
+  operations.push(operation);
+  setDisplay();
 }
 
 function equal() {
-  data.operation = "=";
+  let result = 0;
+  numbers.forEach((item, index) => {
+    switch (operations[index]) {
+      case "+":
+        if (index === 0) {
+          result = item + numbers[index + 1];
+          break;
+        }
+        result = result + numbers[index + 1];
+        break;
+      case "*":
+        if (index === 0) {
+          result = item * numbers[index + 1];
+          break;
+        }
+        result = result * numbers[index + 1];
+        break;
+      case "-":
+        if (index === 0) {
+          result = item - numbers[index + 1];
+          break;
+        }
+        result = result - numbers[index + 1];
+        break;
+      case "/":
+        if (index === 0) {
+          result = item / numbers[index + 1];
+          break;
+        }
+        result = result / numbers[index + 1];
+        break;
+    }
+  });
+  console.log(result);
 }
 
 function del() {

@@ -9,13 +9,16 @@
 </head>
 <body>
     <div class="calculator">
-        <div class="display"></div>
+        <div class="display">
+            <p id="current">0</p>
+            <p id="result">0</p>
+        </div>
 
         <div class="operations">
-            <button id="sum" onclick="sum()">&#43;</button>
-            <button id="sub" onclick="sub()">&#45;</button>
-            <button id="times" onclick="times()">&#215;</button>
-            <button id="divide" onclick="divide()">&#247;</button>
+            <button id="sum" onclick="getOperation('+')">&#43;</button>
+            <button id="sub" onclick="getOperation('-')">&#45;</button>
+            <button id="times" onclick="getOperation('*')">&#215;</button>
+            <button id="divide" onclick="getOperation('/')">&#247;</button>
         </div>
 
         <div class="numbers">
