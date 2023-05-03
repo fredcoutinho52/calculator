@@ -6,20 +6,20 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-const numbers = [];
-const operations = [];
+let numbers = [];
+let operations = [];
 
 function setDisplay() {
   const currentEl = document.getElementById("current");
   let result = "";
   numbers.forEach((item, index) => {
-    if (index === numbers.length - 1) {
-      result = result + `${item}`;
+    if (operations[index]) {
+      result = result + `${item} ${operations[index]} `;
       return;
     }
-    result = result + `${item} ${operations[index]}`;
+    result = result + `${item}`;
   });
-  console.log(result);
+  currentEl.innerText = result;
 }
 
 function getNumber(event) {
@@ -33,7 +33,14 @@ function getOperation(operation) {
   setDisplay();
 }
 
+function cleanMemory() {
+  numbers = [];
+  operations = [];
+}
+
 function equal() {
+  const currentEl = document.getElementById("current");
+  const resultEl = document.getElementById("result");
   let result = 0;
   numbers.forEach((item, index) => {
     switch (operations[index]) {
@@ -67,9 +74,16 @@ function equal() {
         break;
     }
   });
-  console.log(result);
+  cleanMemory();
+  currentEl.innerText = 0;
+  resultEl.innerText = result;
 }
 
 function del() {
-  
+  if (numbers.length === operations.length) {
+    operations.pop();
+  } else {
+    numbers.pop();
+  }
+  setDisplay();
 }
